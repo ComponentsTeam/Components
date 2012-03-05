@@ -1,0 +1,16 @@
+h1. License
+
+Copyright (c) 2012 Paul Buonopane.  All rights reserved.  "Components" and "Zenexer" are trademarks of Paul Buonopane.
+
+This source code is made available for non-commercial use only.  You may use it under the following conditions:
+
+* This license remains in place.
+* Any README, README.textile, or similar documents are included with the source code.
+* Any modifications become the property of the above stated copyright holder.  You hold no rights to modifications.
+* You will immediately destroy all copyright-protected works upon request of the above stated copyright holder.
+
+PROVIDED THE AFFOREMENTIONED CONDITIONS ARE MET, you are entitled to the following, unless otherwise revoked by the above stated copyright holder:
+
+* You may use the above stated trademark(s) to endorse your non-commercial products.
+* You may modify the copyright-protected work.
+* You may redistribute the copyright-protected work, in part or in whole.
