@@ -4,3 +4,4 @@ classes
 *.zip
 .DS_Store
 desktop.ini
+/Components/nbproject/private/

@@ -1,0 +1,63 @@
+## List of available components, both enabled and disabled.
+---
+# Three dashes mark start of document.
+
+# READ THIS or you will be [[FRUSTRATED]]:
+#
+#   - Any token starting with one or two exclamation marks (!) is for internal
+#     purposes.  Copy it as necessary, never omit it, and do not change it.
+#
+#   - Comments begin with a hash mark (#), and MUST be preceded by a space,
+#     unless they are the only thing on a line.
+#
+#   - TABS WILL BREAK THE DOCUMENT.  Only use spaces!
+#
+#  +- FOREIGN LANGUAGES AND SPECIAL CHARACTERS
+#  |
+#  `- If you're using special, non-ANSI characters (such as many northern-
+#  |  European-specific letters/accents), you MUST save this file as Unicode.
+#  |  Either UTF-8 or UTF-16 will do.
+#  |
+#  `- If you are asked about a BOM or byte order mark while saving as Unicode,#  |  yes, you want one, and I believe it should be little endian.  Most
+#  |  editors should figure this out without prompting you, though.
+#  |
+#  `- If you are switching between ANSI and Unicode, you need to CONVERT, not
+#     just save.  Otherwise, the first three(?) bytes in the file will be
+#     corrupted.
+#
+#   - The document begins with three dashes (---) and ends with three periods
+#     (...).  Generally, don't put anything outside this marked region unless
+#     it is either already there, or you have a specific reason to do so.
+#
+#   - Pointers are marked like &this.  References are marked like *this.
+#     Mark a node with a pointer to reference it later in the document.  This
+#     allows you to "name" nodes, and reuse them without having to copy/paste.
+#
+#   - ANYTHING MARKED LIKE !this HAS A STRICTLY DEFINED STRUCTURE.  You cannot
+#     add extra nodes.  You cannot omit nodes.  Variable-size nodes can, of
+#     course, still be of any length.  In this case, the entire document is
+#     strictly defined, as marked by !cdoc.
+#
+#   - Strings (text) should ALWAYS be enclosed in double quotes (")
+#     preferably, or at least single quotes (').
+
+# Can't touch this. << see whut i did thur
+!cdoc
+
+# List of all files containing components, for convenience.
+jars:
+  - &components !file "plugins/Components.jar"
+
+# List of all available components.
+available:
+  - !cdef
+    &management
+    jar: *components
+    class: "com.earth2me.components.components.Management"
+
+# List only of enabled components.
+enabled:
+  - *management
+
+# Three periods mark end of the document.
+...
