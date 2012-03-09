@@ -1,5 +1,6 @@
 package com.earth2me.components.plugin;
 
+import com.earth2me.components.Context;
 import java.util.logging.Level;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,15 +14,40 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class ComponentsPlugin extends JavaPlugin
 {
+	private transient Context context;
+
 	/**
 	 * Called immediately after the plugin loads.
 	 */
 	@Override
 	public void onLoad()
 	{
+		reportState("Loaded");
 		super.onLoad();
+	}
 
+	@Override
+	public void onEnable()
+	{
+		reportState("Enabled");
+		super.onEnable();
+	}
+
+	@Override
+	public void onDisable()
+	{
+		reportState("Disabled");
+		super.onDisable();
+	}
+
+	/**
+	 * Report when the plugin state has changed.
+	 *
+	 * @param action Loaded, Enabled, Disabled.
+	 */
+	private void reportState(String action)
+	{
 		final PluginDescriptionFile description = getDescription();
-		getServer().getLogger().log(Level.INFO, "Loaded {0}.", description.getFullName());
+		getServer().getLogger().log(Level.INFO, "{0} {1}.", new Object[] { action, description.getFullName() });
 	}
 }

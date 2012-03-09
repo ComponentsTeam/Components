@@ -1,9 +1,9 @@
 package com.earth2me.components.util;
 
-import com.earth2me.components.resources.R;
 import com.earth2me.annotations.Resource;
-import java.io.File;
-import java.io.IOException;
+import com.earth2me.components.Context;
+import com.earth2me.components.resources.R;
+import java.io.*;
 
 
 /**
@@ -15,11 +15,14 @@ import java.io.IOException;
 public final class FileExtension
 {
 	// Resources:
-	private static final transient @Resource String ERROR_CREATING_FILE = "Unable to create file: %s";
-	private static final transient @Resource String ERROR_MAKING_WRITABLE = "Unable to make file writable: %s";
-	private static final transient @Resource String ERROR_SECURITY = "Bukkit is preventing the plugin from accessing necessary files.";
-	private static final transient @Resource String ERROR_MKDIRS = "Could not create directory hierarchy: %s";
-
+	private static final transient @Resource
+	String ERROR_CREATING_FILE = "Unable to create file: %s";
+	private static final transient @Resource
+	String ERROR_MAKING_WRITABLE = "Unable to make file writable: %s";
+	private static final transient @Resource
+	String ERROR_SECURITY = "Bukkit is preventing the plugin from accessing necessary files.";
+	private static final transient @Resource
+	String ERROR_MKDIRS = "Could not create directory hierarchy: %s";
 	private static final transient ThreadLocal<String> error = new ThreadLocal<String>();
 
 	/**
@@ -31,7 +34,7 @@ public final class FileExtension
 
 	/**
 	 * Should be called via tail invocation, to eliminate overhead of extra
-	 * stack.  Sets last error and returns false.
+	 * stack. Sets last error and returns false.
 	 *
 	 * @param reason reason for last error, in the user's locale.
 	 * @return false.
@@ -43,9 +46,9 @@ public final class FileExtension
 	}
 
 	/**
-	 * Gets the last error that occurred.  Speedier than exceptions, and
-	 * still thread-safe.  Any method that uses a boolean to indicate success
-	 * will set an error before returning false.
+	 * Gets the last error that occurred. Speedier than exceptions, and still
+	 * thread-safe. Any method that uses a boolean to indicate success will set
+	 * an error before returning false.
 	 *
 	 * @return an ID indicating the last error to occur, or null if no errors
 	 * have occurred in the current thread.
@@ -56,12 +59,68 @@ public final class FileExtension
 	}
 
 	/**
-	 * Clears the error state for the current thread.  Should always be
-	 * called after a success-indicating method returns false.
+	 * Clears the error state for the current thread. Should always be called
+	 * after a success-indicating method returns false.
 	 */
 	public static void clearError()
 	{
 		error.remove();
+	}
+
+	/**
+	 * Obtains a file object for a resource file, first extracting the file from
+	 * the jar if necessary. This method is unsafe, in that it assumes the
+	 * file/folder can be created/read.
+	 *
+	 * @param name the relative path to the file from the resource directory.
+	 * @return a {@code File} object representing either a pre-existing or
+	 * newly-extracted file.
+	 */
+	public static File getResource(String name)
+	{
+		final File resources = new File(Context.getContext().getPlugin().getDataFolder(), "resources");
+
+		if (!resources.exists())
+		{
+			resources.mkdirs();
+		}
+
+		final File file = new File(resources, name);
+
+		try
+		{
+			if (!file.exists() && file.createNewFile())
+			{
+				final InputStream input = FileExtension.class.getResourceAsStream("resources/" + name);
+				if (input == null)
+				{
+					return null;
+				}
+
+				final OutputStream output = new FileOutputStream(file);
+				try
+				{
+					for (int len = input.available(); len > 0; len = input.available())
+					{
+						final byte[] buffer = new byte[len];
+						int actual = input.read(buffer);
+						output.write(buffer, 0, actual);
+						output.flush();
+					}
+				}
+				finally
+				{
+					output.close();
+					input.close();
+				}
+			}
+		}
+		catch (Throwable ex)
+		{
+			return null;
+		}
+
+		return file;
 	}
 
 	/**
@@ -104,21 +163,30 @@ public final class FileExtension
 		{
 			return true;
 		}
-		else if (!file.setWritable(true, true))
-		{
-			return fail(R.string(ERROR_MAKING_WRITABLE, file.getAbsolutePath()));
-		}
-		else if (!file.canWrite() && !file.setWritable(true, false))
-		{
-			return fail(R.string(ERROR_MAKING_WRITABLE, file.getAbsolutePath()));
-		}
-		else if (!file.canWrite())
-		{
-			return fail(R.string(ERROR_MAKING_WRITABLE, file.getAbsolutePath()));
-		}
 		else
 		{
-			return true;
+			if (!file.setWritable(true, true))
+			{
+				return fail(R.string(ERROR_MAKING_WRITABLE, file.getAbsolutePath()));
+			}
+			else
+			{
+				if (!file.canWrite() && !file.setWritable(true, false))
+				{
+					return fail(R.string(ERROR_MAKING_WRITABLE, file.getAbsolutePath()));
+				}
+				else
+				{
+					if (!file.canWrite())
+					{
+						return fail(R.string(ERROR_MAKING_WRITABLE, file.getAbsolutePath()));
+					}
+					else
+					{
+						return true;
+					}
+				}
+			}
 		}
 	}
 
@@ -159,27 +227,39 @@ public final class FileExtension
 				return createWritableFile(file);
 			}
 		}
-		else if (!parent.canWrite())
+		else
 		{
-			if (!parent.setWritable(true, true))
+			if (!parent.canWrite())
 			{
-				return fail(R.string(ERROR_MAKING_WRITABLE, parent.getAbsolutePath()));
-			}
-			else if (!parent.canWrite() && !parent.setWritable(true))
-			{
-				return fail(R.string(ERROR_MAKING_WRITABLE, parent.getAbsolutePath()));
-			}
-			else if (!parent.canWrite())
-			{
-				return fail(R.string(ERROR_MAKING_WRITABLE, parent.getAbsolutePath()));
-			}
-			else if (file.canWrite())
-			{
-				return createWritableFile(file);
-			}
-			else
-			{
-				return fail(R.string(ERROR_MAKING_WRITABLE, parent.getAbsolutePath()));
+				if (!parent.setWritable(true, true))
+				{
+					return fail(R.string(ERROR_MAKING_WRITABLE, parent.getAbsolutePath()));
+				}
+				else
+				{
+					if (!parent.canWrite() && !parent.setWritable(true))
+					{
+						return fail(R.string(ERROR_MAKING_WRITABLE, parent.getAbsolutePath()));
+					}
+					else
+					{
+						if (!parent.canWrite())
+						{
+							return fail(R.string(ERROR_MAKING_WRITABLE, parent.getAbsolutePath()));
+						}
+						else
+						{
+							if (file.canWrite())
+							{
+								return createWritableFile(file);
+							}
+							else
+							{
+								return fail(R.string(ERROR_MAKING_WRITABLE, parent.getAbsolutePath()));
+							}
+						}
+					}
+				}
 			}
 		}
 
