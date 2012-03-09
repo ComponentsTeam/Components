@@ -18,12 +18,11 @@ import org.yaml.snakeyaml.representer.Representer;
  */
 public final class YamlStore<T extends IStorable> implements IBackedStore
 {
-
 	private final transient Yaml yaml;
 	private final transient File file;
 	private final transient Class<?> type;
 	private final transient boolean readonly;
-	private transient T data;
+	private T data;
 
 	/**
 	 * Instantiates a new YAML store. Does NOT load from the file. Defaults to
@@ -63,14 +62,20 @@ public final class YamlStore<T extends IStorable> implements IBackedStore
 		options.setDefaultFlowStyle(DumperOptions.FlowStyle.AUTO);
 		options.setDefaultScalarStyle(DumperOptions.ScalarStyle.DOUBLE_QUOTED);
 
-		// Register class tags.
+		// Register class tag for this document.
 		final Representer representer = new Representer();
+		representer.addClassTag(type, new Tag("!" + data.getId()));
+
+		// Register standard class tags.
+		representer.addClassTag(File.class, new Tag("!File"));
+		representer.addClassTag(String.class, new Tag("!Locale"));
+
+		// Register custom class tags.
 		final Map<String, Class<?>> customTags = data.getCustomClassTags();
 		for (String tag : customTags.keySet())
 		{
 			representer.addClassTag(customTags.get(tag), new Tag("!" + tag));
 		}
-		representer.addClassTag(type, new Tag("!" + data.getId()));
 
 		// Instantiate yaml with all the parameters we just defined.
 		this.yaml = new Yaml(representer, options);

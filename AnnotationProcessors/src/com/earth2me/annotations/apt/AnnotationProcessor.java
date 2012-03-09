@@ -33,7 +33,7 @@ public final class AnnotationProcessor extends AbstractProcessor
 {
 
 	private static final transient String PACKAGE = "resources.localization";
-	private static final transient String LOCALE_FILE_NAME = "en.locale";
+	private static final transient String LOCALE_FILE_NAME = "en-US.locale";
 	private transient Writer out;
 
 	@Override

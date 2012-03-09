@@ -1,0 +1,7 @@
+## Settings common to all components.
+---
+!CommonSettings
+# Important notes are in Components.yml.
+
+locale: !Locale en-US
+...

@@ -1,4 +1,4 @@
-package com.earth2me.components;
+package com.earth2me.components.plugin;
 
 import java.util.logging.Level;
 import org.bukkit.plugin.PluginDescriptionFile;

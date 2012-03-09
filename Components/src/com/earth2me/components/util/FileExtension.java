@@ -1,4 +1,4 @@
-package com.earth2me.components;
+package com.earth2me.components.util;
 
 import com.earth2me.components.resources.R;
 import com.earth2me.annotations.Resource;
