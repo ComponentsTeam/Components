@@ -5,3 +5,7 @@ classes
 .DS_Store
 desktop.ini
 /Components/nbproject/private/
+/Components/build/
+/Components/dist/
+/AnnotationProcessors/nbproject/private/
+/AnnotationProcessors/build/
