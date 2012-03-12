@@ -1,4 +1,4 @@
-package com.earth2me.components;
+package com.earth2me.components.storage;
 
 import com.earth2me.components.storage.IStorable;
 import java.util.Collections;

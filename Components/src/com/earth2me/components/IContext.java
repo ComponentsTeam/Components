@@ -1,5 +1,6 @@
 package com.earth2me.components;
 
+import com.earth2me.components.storage.CommonSettings;
 import com.earth2me.components.plugin.ComponentsPlugin;
 import com.earth2me.components.storage.YamlStore;
 import java.util.logging.Logger;
