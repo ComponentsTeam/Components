@@ -1,7 +1,7 @@
 bin
 classes
 *.class
-*.zip
+*/*.zip
 .DS_Store
 desktop.ini
 /Components/nbproject/private/
