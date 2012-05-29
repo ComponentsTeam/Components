@@ -16,7 +16,7 @@ import org.yaml.snakeyaml.representer.Representer;
  * @param <T> the type to serialize/store.
  * @author Zenexer
  */
-public final class YamlStore<T extends IStorable> implements IBackedStore
+public final class YamlStore<T extends IStorable> implements IBackedStore<T>
 {
 	private final transient Yaml yaml;
 	private final transient File file;
@@ -126,6 +126,11 @@ public final class YamlStore<T extends IStorable> implements IBackedStore
 	{
 		try
 		{
+			if (!file.exists())
+			{
+				return false;
+			}
+			
 			final FileReader reader = new FileReader(file);
 			try
 			{
@@ -149,6 +154,7 @@ public final class YamlStore<T extends IStorable> implements IBackedStore
 	 *
 	 * @return A mutable, serializable object housing the data.
 	 */
+	@Override
 	public final T getData()
 	{
 		return data;

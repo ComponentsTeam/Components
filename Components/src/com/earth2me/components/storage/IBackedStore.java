@@ -7,7 +7,7 @@ package com.earth2me.components.storage;
  *
  * @author Zenexer
  */
-public interface IBackedStore extends IStore
+public interface IBackedStore<T extends IStorable> extends IStore
 {
 	/**
 	 * Saves the current dataset. All changes to the backing container will be
@@ -23,4 +23,6 @@ public interface IBackedStore extends IStore
 	 * @return true if the operation is successful; otherwise, false.
 	 */
 	boolean load();
+	
+	T getData();
 }

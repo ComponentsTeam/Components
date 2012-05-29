@@ -1,8 +1,8 @@
 package com.earth2me.components;
 
-import com.earth2me.components.storage.CommonSettings;
 import com.earth2me.components.plugin.ComponentsPlugin;
-import com.earth2me.components.storage.YamlStore;
+import com.earth2me.components.storage.CommonSettings;
+import com.earth2me.components.storage.IBackedStore;
 import java.util.logging.Logger;
 import org.bukkit.Server;
 
@@ -33,7 +33,7 @@ public interface IContext
 	 *
 	 * @return a data store of common settings.
 	 */
-	YamlStore<CommonSettings> getCommonSettings();
+	IBackedStore<CommonSettings> getCommonSettings();
 
 	/**
 	 * Gets a logger for reporting notices, warnings, and errors.

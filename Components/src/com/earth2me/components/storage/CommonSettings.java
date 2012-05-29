@@ -1,9 +1,7 @@
 package com.earth2me.components.storage;
 
-import com.earth2me.components.storage.IStorable;
 import java.util.Collections;
 import java.util.Map;
-import lombok.Data;
 
 
 /**
@@ -11,7 +9,6 @@ import lombok.Data;
  *
  * @author Zenexer
  */
-@Data
 public final class CommonSettings implements IStorable
 {
 	private String locale;
@@ -26,5 +23,25 @@ public final class CommonSettings implements IStorable
 	public Map<String, Class<?>> getCustomClassTags()
 	{
 		return Collections.emptyMap();
+	}
+
+	/**
+	 * Gets the locale of the server.
+	 * 
+	 * @return the locale
+	 */
+	public String getLocale()
+	{
+		return locale;
+	}
+
+	/**
+	 * Sets the locale of the server.
+	 * 
+	 * @param locale the locale to set
+	 */
+	public void setLocale(String locale)
+	{
+		this.locale = locale;
 	}
 }
