@@ -25,4 +25,6 @@ public interface IBackedStore<T extends IStorable> extends IStore
 	boolean load();
 	
 	T getData();
+	
+	void close();
 }

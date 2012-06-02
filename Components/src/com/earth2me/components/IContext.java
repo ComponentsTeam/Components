@@ -41,4 +41,6 @@ public interface IContext
 	 * @return a logger appropriate for the context.
 	 */
 	Logger getLogger();
+	
+	void enqueueTask(Runnable task);
 }

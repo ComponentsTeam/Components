@@ -96,7 +96,6 @@ public final class YamlStore<T extends IStorable> implements IBackedStore<T>
 
 		try
 		{
-
 			final FileWriter writer = new FileWriter(file);
 			try
 			{
@@ -158,5 +157,10 @@ public final class YamlStore<T extends IStorable> implements IBackedStore<T>
 	public final T getData()
 	{
 		return data;
+	}
+
+	@Override
+	public void close()
+	{
 	}
 }

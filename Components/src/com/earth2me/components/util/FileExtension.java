@@ -15,14 +15,15 @@ import java.io.*;
 public final class FileExtension
 {
 	// Resources:
-	private static final transient @Resource
-	String ERROR_CREATING_FILE = "Unable to create file: %s";
-	private static final transient @Resource
-	String ERROR_MAKING_WRITABLE = "Unable to make file writable: %s";
-	private static final transient @Resource
-	String ERROR_SECURITY = "Bukkit is preventing the plugin from accessing necessary files.";
-	private static final transient @Resource
-	String ERROR_MKDIRS = "Could not create directory hierarchy: %s";
+	@Resource
+	private static final transient String ERROR_CREATING_FILE = "Unable to create file: %s";
+	@Resource
+	private static final transient String ERROR_MAKING_WRITABLE = "Unable to make file writable: %s";
+	@Resource
+	private static final transient String ERROR_SECURITY = "Bukkit is preventing the plugin from accessing necessary files.";
+	@Resource
+	private static final transient String ERROR_MKDIRS = "Could not create directory hierarchy: %s";
+	
 	private static final transient ThreadLocal<String> error = new ThreadLocal<String>();
 
 	/**
@@ -30,6 +31,17 @@ public final class FileExtension
 	 */
 	private FileExtension()
 	{
+	}
+	
+	/**
+	 * Prepares a string for use in a filename.
+	 * 
+	 * @param text the text to escape
+	 * @return text with most symbols replaced with underscores
+	 */
+	public static String escape(final String text)
+	{
+		return text.replaceAll("[^a-zA-Z0-9_\\-]", "_");
 	}
 
 	/**

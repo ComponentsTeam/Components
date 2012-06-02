@@ -3,7 +3,8 @@ package com.earth2me.components;
 import com.earth2me.components.plugin.ComponentsPlugin;
 import com.earth2me.components.storage.CommonSettings;
 import com.earth2me.components.storage.IBackedStore;
-import com.earth2me.components.storage.YamlStore;
+import com.sun.jmx.snmp.tasks.TaskServer;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.logging.Logger;
 import org.bukkit.Server;
 
@@ -13,12 +14,13 @@ import org.bukkit.Server;
  *
  * @author Zenexer
  */
-public final class Context implements IContext
+public final class Context implements IContext, IClosable
 {
 	private static transient IContext context;
 	private final transient Server server;
 	private final transient ComponentsPlugin plugin;
-	private IBackedStore<CommonSettings> commonSettings;
+	private transient ScheduledThreadPoolExecutor scheduler;
+	private transient IBackedStore<CommonSettings> commonSettings;
 
 	/**
 	 * Instantiates a new context with the specified server.
@@ -30,6 +32,18 @@ public final class Context implements IContext
 	{
 		this.plugin = plugin;
 		this.server = server;
+	}
+	
+	public void start()
+	{
+		scheduler = new ScheduledThreadPoolExecutor(plugin.getConfig().getInt("core.thread-pool-size"));
+	}
+
+	@Override
+	public void close()
+	{
+		scheduler.shutdown();
+		scheduler = null;
 	}
 
 	/**
@@ -61,7 +75,7 @@ public final class Context implements IContext
 	 * {@inheritDoc}
 	 */
 	@Override
-	public YamlStore<CommonSettings> getCommonSettings()
+	public IBackedStore<CommonSettings> getCommonSettings()
 	{
 		return commonSettings;
 	}
@@ -78,6 +92,7 @@ public final class Context implements IContext
 	/**
 	 * @return the server
 	 */
+	@Override
 	public Server getServer()
 	{
 		return server;
@@ -86,8 +101,14 @@ public final class Context implements IContext
 	/**
 	 * @return the plugin
 	 */
+	@Override
 	public ComponentsPlugin getPlugin()
 	{
 		return plugin;
+	}
+
+	@Override
+	public void enqueueTask(Runnable task)
+	{
 	}
 }

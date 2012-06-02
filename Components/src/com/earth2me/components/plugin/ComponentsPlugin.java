@@ -29,6 +29,8 @@ public class ComponentsPlugin extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
+		context.start();
+		
 		reportState("Enabled");
 		super.onEnable();
 	}
@@ -36,6 +38,8 @@ public class ComponentsPlugin extends JavaPlugin
 	@Override
 	public void onDisable()
 	{
+		context.close();
+		
 		reportState("Disabled");
 		super.onDisable();
 	}

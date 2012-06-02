@@ -16,6 +16,13 @@ public final class UserSurrogate implements IStorable
 	{
 		return "UserSurrogate";
 	}
+	
+	public static UserSurrogate createDefault()
+	{
+		UserSurrogate userSurrogate = new UserSurrogate();
+		userSurrogate.loadDefaults();
+		return userSurrogate;
+	}
 
 	@Override
 	public Map<String, Class<?>> getCustomClassTags()
