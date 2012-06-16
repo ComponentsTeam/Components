@@ -3,9 +3,10 @@ package com.earth2me.components;
 import com.earth2me.components.plugin.ComponentsPlugin;
 import com.earth2me.components.storage.CommonSettings;
 import com.earth2me.components.storage.IBackedStore;
-import com.sun.jmx.snmp.tasks.TaskServer;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.logging.Logger;
+import org.apache.cassandra.thrift.*;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 
 
@@ -44,6 +45,11 @@ public final class Context implements IContext, IClosable
 	{
 		scheduler.shutdown();
 		scheduler = null;
+	}
+	
+	public User getUser(OfflinePlayer player)
+	{
+		return new User(this, player);
 	}
 
 	/**
@@ -110,5 +116,6 @@ public final class Context implements IContext, IClosable
 	@Override
 	public void enqueueTask(Runnable task)
 	{
+		scheduler.execute(task);
 	}
 }

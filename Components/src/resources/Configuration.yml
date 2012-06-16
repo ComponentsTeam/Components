@@ -1,0 +1,13 @@
+## Components Bukkit Plugin main configuration.
+---
+
+core:
+  # The more players you have, the higher this number needs to go.
+  # Sixteen is good for most servers, but it also means that to handle each
+  # thread truly concurrently, you would need 16 CPU cores (2 CPUs with 8 cores
+  # each).  You want this to be around the number of "events" that are happening
+  # simultaneously on your server, e.g. commands, breaking blocks, dying, etc.
+  # Sixteen would be overkill for a 2-player server, but great for a 20-player
+  # server.  This--multithreading--is the key feature of Components, and is what
+  # allows Components to process two commands at exactly the same time.
+	thread-pool-size: 16

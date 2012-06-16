@@ -1,0 +1,11 @@
+# Cassandra is the database engine for Components.  Components automatically
+# runs a Cassandra server when it is enabled.
+cassandra:
+  # The port on which Cassandra will run.  IF YOU HAVE MULTIPLE SERVERS ON THE
+  # SAME MACHINE, THEY MUST BE USING DIFFERENT PORTS.
+  port: 9160
+  
+  # The IP address to which the Cassandra daemon will bind and the Cassandra
+  # client will connect.  Do NOT change this unless you know what you are doing,
+  # as making this a public IP address is a HUGE security risk!
+  ip: 127.0.0.1
