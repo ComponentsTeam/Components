@@ -15,3 +15,10 @@ PROVIDED THE AFFOREMENTIONED CONDITIONS ARE MET, you are entitled to the followi
 * You may use the above stated trademark(s) to endorse your commercial and/or non-commercial products.
 * You may modify the copyright-protected work(s).
 * You may redistribute the copyright-protected work(s), in part or in whole.
+
+
+Commiting Rules:
+* Keep line endings the same as the file. Do not change them.
+* Brace location and naming conventions.
+* Sign off rights to the code you commit.
+
