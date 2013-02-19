@@ -1,0 +1,32 @@
+## Configuration file for Components.
+---
+
+## These are core settings for Components.
+core:
+  ## The number of threads to use for executing tasks.  Ideally, this should be at or below the number of processor
+  ## cores that your server has.  Lower might be better to prevent tasks from taking over the CPU.  Six is a good
+  ## number for an octo-core CPU or two quad-core CPUs.
+  threadPoolSize: 6
+
+## Cassandra is the database engine for Components.  Components automatically runs a Cassandra server when it is
+## enabled.
+cassandraServer:
+  ## Usually you will want this enabled.
+  enabled: true
+  
+  ## The IP address to which the Cassandra daemon will bind and the Cassandra client will connect.  Do NOT change this
+  ## unless you know what you are doing.
+  interface: 127.0.0.1
+  
+  ## The port on which Cassandra will run.  If you have multiple servers on the same machine, they must be using
+  ## different ports.
+  port: 9160
+  
+## These are the Cassandrda servers to which we will connect as a client.  Your data can theoretically be stored on
+## multiple servers for redundancy and efficiency, but usually you will just want to have one server here, which
+## matches the "cassandraServer" section above.
+cassandraPool:
+  ## This is the local server, and should match the "cassandraServer" section above.
+  - hostname: 127.0.0.1
+    port: 9160
+    
